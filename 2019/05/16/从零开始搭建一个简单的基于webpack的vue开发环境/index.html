@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="AntsMoveBrick 的博客">
 <meta property="og:description" content="搭建可以参考这个链接（webpack3.0版本），里面写的很详细，我在此对webpack4.0版本的改动做一些相应的调整。https://segmentfault.com/a/1190000012789253#articleHeader6 差异：webpack4更改了一些东西1、对html文本的处理webpack.config.js123456789101112131415// 引入var Vue">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-16T08:38:50.264Z">
+<meta property="og:updated_time" content="2019-05-16T10:30:42.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始搭建一个简单的基于webpack的vue开发环境">
 <meta name="twitter:description" content="搭建可以参考这个链接（webpack3.0版本），里面写的很详细，我在此对webpack4.0版本的改动做一些相应的调整。https://segmentfault.com/a/1190000012789253#articleHeader6 差异：webpack4更改了一些东西1、对html文本的处理webpack.config.js123456789101112131415// 引入var Vue">
@@ -39,34 +39,40 @@
   <div id="container">
     <div id="wrap">
       <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">AntsMoveBrick 的博客</a>
-      </h1>
-      
+    <div id="banner"></div>
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <h1 id="logo-wrap">
+                <a href="/" id="logo">
+                    AntsMoveBrick 的博客
+                </a>
+            </h1>
+            
+        </div>
+        <div id="header-inner" class="inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <a class="main-nav-link" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="main-nav-link" href="/archives">
+                        Archives
+                    </a>
+                    
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+                    
+                        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+            </div>
+        </div>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
 </header>
       <div class="outer">
         <section id="main"><article id="post-从零开始搭建一个简单的基于webpack的vue开发环境" class="article article-type-post" itemscope itemprop="blogPost">
@@ -92,8 +98,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>搭建可以参考这个链接（webpack3.0版本），里面写的很详细，我在此对webpack4.0版本的改动做一些相应的调整。<br><a href="https://segmentfault.com/a/1190000012789253#articleHeader6" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012789253#articleHeader6</a></p>
-<h5 id="差异：webpack4更改了一些东西"><a href="#差异：webpack4更改了一些东西" class="headerlink" title="差异：webpack4更改了一些东西"></a>差异：webpack4更改了一些东西</h5><h6 id="1、对html文本的处理"><a href="#1、对html文本的处理" class="headerlink" title="1、对html文本的处理"></a>1、对html文本的处理</h6><p>webpack.config.js<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 引入</span><br><span class="line">var VueLoaderPlugin = require(&apos;vue-loader/lib/plugin&apos;);</span><br><span class="line">var HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line"> // 配置插件</span><br><span class="line">    plugins: [</span><br><span class="line">        new VueLoaderPlugin(),</span><br><span class="line">        new webpack.HotModuleReplacementPlugin(),   //  生成一个热更新的模块对象</span><br><span class="line">        new HtmlWebpackPlugin(&#123;  //创建一个在内存中生成html页面的插件</span><br><span class="line">            template: path.join(__dirname,&apos;index.html&apos;),   // 指定模板页面，根据指定的路径生成内存中的页面</span><br><span class="line">            filename: &apos;index.html&apos;  //指定内存中生成的页面的名称</span><br><span class="line">        &#125;)</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h6 id="2、打包压缩："><a href="#2、打包压缩：" class="headerlink" title="2、打包压缩："></a>2、打包压缩：</h6><pre><code>只在package.json中修改
+<h4 id="差异：webpack4更改了一些东西"><a href="#差异：webpack4更改了一些东西" class="headerlink" title="差异：webpack4更改了一些东西"></a>差异：webpack4更改了一些东西</h4><h5 id="1、对html文本的处理"><a href="#1、对html文本的处理" class="headerlink" title="1、对html文本的处理"></a>1、对html文本的处理</h5><p>webpack.config.js<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 引入</span><br><span class="line">var VueLoaderPlugin = require(&apos;vue-loader/lib/plugin&apos;);</span><br><span class="line">var HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line"> // 配置插件</span><br><span class="line">    plugins: [</span><br><span class="line">        new VueLoaderPlugin(),</span><br><span class="line">        new webpack.HotModuleReplacementPlugin(),   //  生成一个热更新的模块对象</span><br><span class="line">        new HtmlWebpackPlugin(&#123;  //创建一个在内存中生成html页面的插件</span><br><span class="line">            template: path.join(__dirname,&apos;index.html&apos;),   // 指定模板页面，根据指定的路径生成内存中的页面</span><br><span class="line">            filename: &apos;index.html&apos;  //指定内存中生成的页面的名称</span><br><span class="line">        &#125;)</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="2、打包压缩："><a href="#2、打包压缩：" class="headerlink" title="2、打包压缩："></a>2、打包压缩：</h5><pre><code>只在package.json中修改
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;dev&quot;: &quot;cross-env NODE_ENV=development webpack-dev-server --hot&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;webpack --mode production&quot;	// 打包压缩</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
       
