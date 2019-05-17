@@ -1528,8 +1528,7 @@ pre .javascript .function {
 
 .widget {
     color: #777;
-    text-shadow: 0 1px #fff;
-    background: #ddd;
+    background: rgb(1, 32, 77);
     -webkit-box-shadow: 0 -1px 4px #ccc inset;
     box-shadow: 0 -1px 4px #ccc inset;
     border: 1px solid #ccc;
@@ -1538,7 +1537,7 @@ pre .javascript .function {
 }
 
 .widget a {
-    color: #258fb8;
+    color: #c7c7c7;
     text-decoration: none;
 }
 
